@@ -1,30 +1,34 @@
 import "bootstrap";
 import "./style.css";
 
-
-import "./assets/img/rigo-baby.jpg";
-import "./assets/img/4geeks.ico";
-
 window.onload = function() {
-  //write your code here
-  
-    let cardNumber = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-    let suit = ["Diamonds", "Spades", "Hearts", "Clubs"];
-    let randomCardNumber = Math.floor(Math.random() * cardNumber.length);
-    let randomSuitNumber = Math.floor(Math.random() * suit.length);
-    let finalSuit = suit[randomSuitNumber];
+  const button = document.querySelector("#button");
+  const cardContent = document.querySelector("#cardContent");
+  const theCard = document.querySelector("#theCard");
+
+  // Valores y palos de las cartas
+  const cardNumber = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+  const suits = ["Diamonds", "Spades", "Hearts", "Clubs"];
+
+  // Función para generar carta aleatoria
+  function generateRandomCard() {
+    const randomCardNumber = Math.floor(Math.random() * cardNumber.length);
+    const randomSuitNumber = Math.floor(Math.random() * suits.length);
+    const finalSuit = suits[randomSuitNumber];
     
-    document.getElementById('cardContent').innerHTML = cardNumber[randomCardNumber];
-    document.getElementById('theCard').className = "";
-    document.getElementById('theCard').classList.add("card");
-    document.getElementById('theCard').classList.add(getSuiteClass(finalSuit));
+    // Actualizar contenido visual
+    cardContent.textContent = cardNumber[randomCardNumber];
+    theCard.className = "card " + getSuiteClass(finalSuit);
   }
-  
+
+  // Función auxiliar para obtener la clase CSS del palo
   function getSuiteClass(suit) {
-    switch (suit) {
-      case "Diamonds": return "suit-diamonds";
-      case "Spades": return "suit-spades";
-      case "Hearts": return "suit-hearts";
-      case "Clubs": return "suit-clubs";
-    }
+    return "suit-" + suit.toLowerCase();
   }
+
+  // Generar primera carta al cargar
+  generateRandomCard();
+
+  // Asignar evento al botón
+  button.addEventListener("click", generateRandomCard);
+};
